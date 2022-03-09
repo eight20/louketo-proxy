@@ -16,6 +16,7 @@ limitations under the License.
 package main
 
 import (
+	"crypto/tls"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -73,8 +74,9 @@ func verifyToken(client *oidc.Client, token jose.JWT) error {
 // NOTE: we may be able to extract the specific (non-standard) claim refresh_expires_in and refresh_expires
 // from response.RawBody.
 // When not available, keycloak provides us with the same (for now) expiry value for ID token.
-func getRefreshedToken(conf *oauth2.Config, t string) (jose.JWT, string, time.Time, time.Duration, error) {
-	tkn, err := conf.TokenSource(context.Background(), &oauth2.Token{RefreshToken: t}).Token()
+func (r *oauthProxy) getRefreshedToken(conf *oauth2.Config, t string) (jose.JWT, string, time.Time, time.Duration, error) {
+	ctx := r.getBackgroundContext()
+	tkn, err := conf.TokenSource(ctx, &oauth2.Token{RefreshToken: t}).Token()
 	if err != nil {
 		if strings.Contains(err.Error(), "refresh token has expired") {
 			return jose.JWT{}, "", time.Time{}, time.Duration(0), ErrRefreshTokenExpired
@@ -91,8 +93,8 @@ func getRefreshedToken(conf *oauth2.Config, t string) (jose.JWT, string, time.Ti
 }
 
 // exchangeAuthenticationCode exchanges the authentication code with the oauth server for a access token
-func exchangeAuthenticationCode(client *oauth2.Config, code string) (*oauth2.Token, error) {
-	return getToken(client, GrantTypeAuthCode, code)
+func (r *oauthProxy) exchangeAuthenticationCode(client *oauth2.Config, code string) (*oauth2.Token, error) {
+	return r.getToken(client, GrantTypeAuthCode, code)
 }
 
 // getUserinfo is responsible for getting the userinfo from the IDPD
@@ -128,8 +130,8 @@ func getUserinfo(client *http.Client, endpoint string, token string) (jose.Claim
 }
 
 // getToken retrieves a code from the provider, extracts and verified the token
-func getToken(config *oauth2.Config, grantType, code string) (*oauth2.Token, error) {
-	ctx := context.Background()
+func (r *oauthProxy) getToken(config *oauth2.Config, grantType, code string) (*oauth2.Token, error) {
+	ctx := r.getBackgroundContext()
 	start := time.Now()
 	token, err := config.Exchange(ctx, code)
 	if err != nil {
@@ -146,6 +148,15 @@ func getToken(config *oauth2.Config, grantType, code string) (*oauth2.Token, err
 	}
 
 	return token, err
+}
+
+func (r *oauthProxy) getBackgroundContext() context.Context {
+	ctx := context.Background()
+	tr := &http.Transport{
+		TLSClientConfig: &tls.Config{InsecureSkipVerify: r.config.SkipOpenIDProviderTLSVerify},
+	}
+	ctx = context.WithValue(ctx, oauth2.HTTPClient, &http.Client{Transport: tr})
+	return ctx
 }
 
 // parseToken retrieves the user identity from the token

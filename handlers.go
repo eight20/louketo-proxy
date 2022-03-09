@@ -115,7 +115,7 @@ func (r *oauthProxy) oauthCallbackHandler(w http.ResponseWriter, req *http.Reque
 
 	conf := r.newOAuth2Config(r.getRedirectionURL(w, req))
 
-	resp, err := exchangeAuthenticationCode(conf, code)
+	resp, err := r.exchangeAuthenticationCode(conf, code)
 	if err != nil {
 		r.log.Error("unable to exchange code for access token", zap.Error(err))
 		r.accessForbidden(w, req)

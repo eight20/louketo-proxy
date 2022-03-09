@@ -160,7 +160,7 @@ func (r *oauthProxy) forwardProxyHandler() func(*http.Request, *http.Response) {
 						zap.String("expires", state.expiration.Format(time.RFC3339)))
 
 					// step: attempt to refresh the access
-					token, newRefreshToken, expiration, _, err := getRefreshedToken(conf, state.refresh)
+					token, newRefreshToken, expiration, _, err := r.getRefreshedToken(conf, state.refresh)
 					if err != nil {
 						state.login = true
 						switch err {
