@@ -33,7 +33,7 @@ import (
 	"github.com/coreos/go-oidc/oidc"
 )
 
-//FIXME remove constants in the future which hopefully won't be necessary in the next releases
+// FIXME remove constants in the future which hopefully won't be necessary in the next releases
 const (
 	GrantTypeAuthCode     = "authorization_code"
 	GrantTypeUserCreds    = "password"

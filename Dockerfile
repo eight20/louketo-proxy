@@ -2,7 +2,7 @@
 # Builder image
 #
 
-FROM golang:1.14.4 AS build-env
+FROM golang:1.20 AS build-env
 ARG SOURCE=*
 
 ADD $SOURCE /src/
@@ -19,7 +19,7 @@ RUN cp "$(find . -name 'louketo-proxy' -type f -print -quit)" /louketo-proxy
 # Actual image
 #
 
-FROM registry.access.redhat.com/ubi8/ubi-minimal:8.2
+FROM registry.access.redhat.com/ubi8/ubi-minimal:8.7
 
 LABEL Name=louketo-proxy \
       Release=https://github.com/louketo/louketo-proxy \

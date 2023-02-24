@@ -292,9 +292,9 @@ func (r *oauthProxy) loginHandler(w http.ResponseWriter, req *http.Request) {
 func emptyHandler(w http.ResponseWriter, req *http.Request) {}
 
 // logoutHandler performs a logout
-//  - if it's just a access token, the cookie is deleted
-//  - if the user has a refresh token, the token is invalidated by the provider
-//  - optionally, the user can be redirected by to a url
+//   - if it's just a access token, the cookie is deleted
+//   - if the user has a refresh token, the token is invalidated by the provider
+//   - optionally, the user can be redirected by to a url
 func (r *oauthProxy) logoutHandler(w http.ResponseWriter, req *http.Request) {
 	// @check if the redirection is there
 	var redirectURL string
