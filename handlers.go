@@ -35,7 +35,7 @@ import (
 	"github.com/coreos/go-oidc/oidc"
 	"golang.org/x/oauth2"
 
-	"github.com/go-chi/chi"
+	"github.com/go-chi/chi/v5"
 	"go.uber.org/zap"
 )
 

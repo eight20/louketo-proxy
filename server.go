@@ -41,8 +41,8 @@ import (
 	proxyproto "github.com/armon/go-proxyproto"
 	"github.com/coreos/go-oidc/oidc"
 	"github.com/elazarl/goproxy"
-	"github.com/go-chi/chi"
-	"github.com/go-chi/chi/middleware"
+	"github.com/go-chi/chi/v5"
+	"github.com/go-chi/chi/v5/middleware"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"github.com/rs/cors"
@@ -207,6 +207,7 @@ func (r *oauthProxy) createReverseProxy() error {
 	// step: add the routing for oauth
 	engine.With(proxyDenyMiddleware).Route(r.config.BaseURI+r.config.OAuthURI, func(e chi.Router) {
 		e.MethodNotAllowed(methodNotAllowHandlder)
+		e.NotFound(http.NotFound)
 		e.HandleFunc(authorizationURL, r.oauthAuthorizationHandler)
 		e.Get(callbackURL, r.oauthCallbackHandler)
 		e.Get(expiredURL, r.expirationHandler)
@@ -223,6 +224,7 @@ func (r *oauthProxy) createReverseProxy() error {
 	if r.config.EnableProfiling {
 		engine.With(proxyDenyMiddleware).Route(debugURL, func(e chi.Router) {
 			r.log.Warn("enabling the debug profiling on /debug/pprof")
+			e.NotFound(http.NotFound)
 			e.Get("/{name}", r.debugHandler)
 			e.Post("/{name}", r.debugHandler)
 		})

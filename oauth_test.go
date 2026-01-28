@@ -32,8 +32,8 @@ import (
 	"golang.org/x/oauth2"
 
 	"github.com/coreos/go-oidc/jose"
-	"github.com/go-chi/chi"
-	"github.com/go-chi/chi/middleware"
+	"github.com/go-chi/chi/v5"
+	"github.com/go-chi/chi/v5/middleware"
 	"github.com/stretchr/testify/assert"
 )
 

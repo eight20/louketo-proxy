@@ -16,10 +16,11 @@ limitations under the License.
 package main
 
 import (
+	"context"
 	"net/url"
 	"time"
 
-	redis "gopkg.in/redis.v4"
+	redis "github.com/redis/go-redis/v9"
 )
 
 type redisStore struct {
@@ -48,26 +49,20 @@ func newRedisStore(location *url.URL) (storage, error) {
 
 // Set adds a token to the store
 func (r redisStore) Set(key, value string, expiration time.Duration) error {
-	if err := r.client.Set(key, value, expiration); err.Err() != nil {
-		return err.Err()
-	}
-
-	return nil
+	ctx := context.Background()
+	return r.client.Set(ctx, key, value, expiration).Err()
 }
 
 // Get retrieves a token from the store
 func (r redisStore) Get(key string) (string, error) {
-	result := r.client.Get(key)
-	if result.Err() != nil {
-		return "", result.Err()
-	}
-
-	return result.Val(), nil
+	ctx := context.Background()
+	return r.client.Get(ctx, key).Result()
 }
 
 // Delete remove the key
 func (r redisStore) Delete(key string) error {
-	return r.client.Del(key).Err()
+	ctx := context.Background()
+	return r.client.Del(ctx, key).Err()
 }
 
 // Close closes of any open resources
