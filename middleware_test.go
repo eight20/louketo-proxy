@@ -31,7 +31,7 @@ import (
 	"github.com/rs/cors"
 	"github.com/stretchr/testify/assert"
 	"go.uber.org/zap"
-	"gopkg.in/resty.v1"
+	"github.com/go-resty/resty/v2"
 )
 
 const (

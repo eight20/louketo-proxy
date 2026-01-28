@@ -8,8 +8,10 @@ require (
 	github.com/etcd-io/bbolt v1.3.3
 	github.com/fsnotify/fsnotify v1.4.7
 	github.com/go-chi/chi/v5 v5.2.4
+	github.com/go-resty/resty/v2 v2.17.1
 	github.com/gofrs/uuid v3.3.0+incompatible
 	github.com/prometheus/client_golang v1.23.2
+	github.com/redis/go-redis/v9 v9.17.3
 	github.com/rs/cors v1.6.0
 	github.com/stretchr/testify v1.11.1
 	github.com/unrolled/secure v0.0.0-20181221173256-0d6b5bb13069
@@ -18,8 +20,6 @@ require (
 	golang.org/x/crypto v0.47.0
 	golang.org/x/net v0.49.0
 	golang.org/x/oauth2 v0.34.0
-	gopkg.in/redis.v4 v4.2.4
-	gopkg.in/resty.v1 v1.10.3
 	gopkg.in/yaml.v2 v2.4.0
 )
 
@@ -30,12 +30,10 @@ require (
 	github.com/codegangsta/negroni v1.0.0 // indirect
 	github.com/coreos/pkg v0.0.0-20180928190104-399ea9e2e55f // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
-	github.com/garyburd/redigo v1.6.0 // indirect
+	github.com/dgryski/go-rendezvous v0.0.0-20200823014737-9f7001d12a5f // indirect
 	github.com/jonboulle/clockwork v0.1.0 // indirect
 	github.com/kr/text v0.2.0 // indirect
 	github.com/munnerz/goautoneg v0.0.0-20191010083416-a7dc8b61c822 // indirect
-	github.com/onsi/ginkgo v1.8.0 // indirect
-	github.com/onsi/gomega v1.5.0 // indirect
 	github.com/pkg/errors v0.8.1 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/prometheus/client_model v0.6.2 // indirect
@@ -48,7 +46,6 @@ require (
 	golang.org/x/sys v0.40.0 // indirect
 	golang.org/x/text v0.33.0 // indirect
 	google.golang.org/protobuf v1.36.8 // indirect
-	gopkg.in/bsm/ratelimit.v1 v1.0.0-20160220154919-db14e161995a // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
 
