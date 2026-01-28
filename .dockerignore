@@ -1,1 +1,4 @@
-/bin/
+bin/
+louketo-proxy
+.git/
+.security-policies/
