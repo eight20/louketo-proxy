@@ -1,4 +1,22 @@
 
+#### **2.3.1**
+
+SECURITY:
+* Fixed 7 security vulnerabilities in Go dependencies (GO-2022-0322, GO-2023-1941, GO-2024-2687, GO-2025-3595)
+* Updated chi router from v3 to v5.2.4
+* Updated prometheus/client_golang from v0.9.x to v1.23.2
+* Updated elazarl/goproxy to v1.8.0
+* Migrated from deprecated gopkg.in/resty.v1 to github.com/go-resty/resty/v2 v2.17.1
+* Migrated from deprecated gopkg.in/redis.v4 to github.com/redis/go-redis/v9 v9.17.3
+* Updated golang.org/x/crypto to v0.47.0
+* Updated golang.org/x/net to v0.49.0
+
+CHANGES:
+* Updated Docker build image from golang:1.20 to golang:1.24-bookworm
+* Updated Docker runtime image from ubi8/ubi-minimal:8.7 to gcr.io/distroless/static-debian12
+* Switched to static binary build for distroless compatibility
+* Using built-in nonroot user in distroless image
+
 #### **2.3.0**
 
 FEATURES:
